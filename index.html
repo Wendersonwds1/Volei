@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#0a0a0f"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-  <meta name="description" content="Setball – Organize suas partidas"/>
-  <title>Setball</title>
+  <meta name="description" content="VoleiApp – Organize suas partidas"/>
+  <title>VoleiApp</title>
   <link rel="manifest" href="manifest.json"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -29,7 +29,7 @@
   <div class="login-wrap">
     <div class="brand-block">
       <div class="brand-icon">🏐</div>
-      <h1 class="brand-name">SET<span>BALL</span></h1>
+      <h1 class="brand-name">VOLEI<span>APP</span></h1>
       <p class="brand-sub">Organize. Jogue. Vença.</p>
     </div>
     <div class="login-card" id="login-card">
@@ -89,7 +89,7 @@
 <div id="screen-home" class="screen">
   <header class="topbar">
     <div class="topbar-left">
-      <span class="topbar-logo">🏐 SETBALL</span>
+      <span class="topbar-logo">🏐 VOLEIAPP</span>
     </div>
     <div class="topbar-right">
       <div class="user-chip" id="user-chip">
@@ -451,18 +451,25 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     PWA Install Banner
-═══════════════════════════════════════════ -->
-<div id="pwa-banner" class="pwa-banner hidden">
-  <span>📱 Instale o Setball!</span>
-  <button class="btn-main btn-sm" id="btn-pwa-install">Instalar</button>
-  <button class="icon-btn" id="btn-pwa-close">✕</button>
-</div>
-
 <!-- Toast global -->
 <div class="global-toast hidden" id="global-toast"></div>
 
 <script src="script.js"></script>
+
+<!-- Banner de instalação PWA -->
+<div id="install-banner" class="hidden">
+  <p>📲 Você ainda não possui o nosso aplicativo. Deseja instalar?</p>
+  <button id="btn-install">Instalar agora</button>
+
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(reg => console.log('Service Worker registrado:', reg))
+      .catch(err => console.error('Erro no SW:', err));
+  }
+</script>
+
+</div>
+
 </body>
 </html>
