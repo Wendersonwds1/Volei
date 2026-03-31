@@ -22,10 +22,10 @@ let APP = {
 /* ──────────────────────────────────────────────────────
    PERSISTÊNCIA
 ────────────────────────────────────────────────────── */
-const save  = () => localStorage.setItem('setball_app', JSON.stringify(APP));
+const save  = () => localStorage.setItem('volei2_app', JSON.stringify(APP));
 const load  = () => {
   try {
-    const raw = localStorage.getItem('setball_app');
+    const raw = localStorage.getItem('volei2_app');
     if (raw) Object.assign(APP, JSON.parse(raw));
   } catch(e) {}
 };
@@ -962,31 +962,31 @@ function showToast(msg) {
   toastTimeout = setTimeout(() => el.classList.add('hidden'), 2400);
 }
 
-/* ──────────────────────────────────────────────────────
-   PWA
-────────────────────────────────────────────────────── */
-let deferredPrompt = null;
-window.addEventListener('beforeinstallprompt', e => {
+/* ───────────────────────────────────────────────
+   PWA INSTALL BANNER
+────────────────────────────────────────────── */
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  document.getElementById('pwa-banner').classList.remove('hidden');
-});
-document.getElementById('btn-pwa-install').addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  document.getElementById('pwa-banner').classList.add('hidden');
-  deferredPrompt = null;
-});
-document.getElementById('btn-pwa-close').addEventListener('click', () => {
-  document.getElementById('pwa-banner').classList.add('hidden');
+  const banner = document.getElementById('install-banner');
+  if (banner) banner.classList.remove('hidden');
 });
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js').catch(() => {});
-  });
-}
+document.getElementById('btn-install').addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const choice = await deferredPrompt.userChoice;
+    if (choice.outcome === 'accepted') {
+      console.log('Usuário aceitou instalar!');
+    } else {
+      console.log('Usuário recusou.');
+    }
+    deferredPrompt = null;
+    document.getElementById('install-banner').classList.add('hidden');
+  }
+});
 
 /* ──────────────────────────────────────────────────────
    INICIALIZAÇÃO
@@ -1004,3 +1004,4 @@ if ('serviceWorker' in navigator) {
     document.getElementById('screen-login').classList.add('active');
   }
 })();
+
