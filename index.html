@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#0a0a0f"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="description" content="Setball – Organize suas partidas"/>
+  <title>Setball</title>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     TELA 1 · SPLASH / LOGIN
+═══════════════════════════════════════════ -->
+<div id="screen-login" class="screen active">
+  <div class="login-bg">
+    <div class="login-orb orb1"></div>
+    <div class="login-orb orb2"></div>
+    <div class="login-orb orb3"></div>
+    <div class="net-lines"></div>
+  </div>
+  <div class="login-wrap">
+    <div class="brand-block">
+      <div class="brand-icon">🏐</div>
+      <h1 class="brand-name">SET<span>BALL</span></h1>
+      <p class="brand-sub">Organize. Jogue. Vença.</p>
+    </div>
+    <div class="login-card" id="login-card">
+      <div class="tab-switch">
+        <button class="tsw active" data-form="login-form">Entrar</button>
+        <button class="tsw" data-form="register-form">Criar conta</button>
+      </div>
+
+      <!-- Login -->
+      <form id="login-form" class="auth-form active" autocomplete="off">
+        <div class="field-wrap">
+          <label>Nome de usuário</label>
+          <input type="text" id="l-user" placeholder="ex: joao123" maxlength="20"/>
+        </div>
+        <div class="field-wrap">
+          <label>PIN (4 dígitos)</label>
+          <div class="pin-row" id="login-pin-row">
+            <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]"/>
+            <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]"/>
+            <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]"/>
+            <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]"/>
+          </div>
+        </div>
+        <div class="auth-error hidden" id="l-error">Usuário ou PIN incorretos</div>
+        <button type="submit" class="btn-main">Entrar →</button>
+      </form>
+
+      <!-- Registro -->
+      <form id="register-form" class="auth-form" autocomplete="off">
+        <div class="field-wrap">
+          <label>Seu nome completo</label>
+          <input type="text" id="r-name" placeholder="ex: João Silva" maxlength="30"/>
+        </div>
+        <div class="field-wrap">
+          <label>Nome de usuário</label>
+          <input type="text" id="r-user" placeholder="ex: joao123" maxlength="20"/>
+        </div>
+        <div class="field-wrap">
+          <label>PIN (4 dígitos)</label>
+          <div class="pin-row" id="reg-pin-row">
+            <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]"/>
+            <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]"/>
+            <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]"/>
+            <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]"/>
+          </div>
+        </div>
+        <div class="auth-error hidden" id="r-error">Preencha todos os campos</div>
+        <button type="submit" class="btn-main">Criar conta →</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     TELA 2 · HOME (Dashboard)
+═══════════════════════════════════════════ -->
+<div id="screen-home" class="screen">
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-logo">🏐 SETBALL</span>
+    </div>
+    <div class="topbar-right">
+      <div class="user-chip" id="user-chip">
+        <div class="user-avatar" id="home-avatar">J</div>
+        <span id="home-username">joao</span>
+      </div>
+      <button class="icon-btn" id="btn-logout" title="Sair">⏏</button>
+    </div>
+  </header>
+
+  <div class="home-body">
+    <div class="home-hero">
+      <p class="hero-greet" id="hero-greet">Boa tarde,</p>
+      <h2 class="hero-name" id="hero-name">João</h2>
+    </div>
+
+    <!-- Partida ativa pill -->
+    <div id="active-match-pill" class="active-pill hidden">
+      <span class="pulse-dot"></span>
+      <span id="active-pill-text">Partida em andamento</span>
+      <button class="pill-btn" id="pill-goto">Ir para a partida →</button>
+    </div>
+
+    <div class="home-grid">
+      <button class="home-card hc-lists" id="hc-lists">
+        <div class="hc-icon">📋</div>
+        <div class="hc-info">
+          <span class="hc-label">Listas</span>
+          <span class="hc-desc">Criar & entrar</span>
+        </div>
+        <span class="hc-arrow">→</span>
+      </button>
+      <button class="home-card hc-match" id="hc-match">
+        <div class="hc-icon">⚡</div>
+        <div class="hc-info">
+          <span class="hc-label">Ir ao Jogo</span>
+          <span class="hc-desc">Montar times</span>
+        </div>
+        <span class="hc-arrow">→</span>
+      </button>
+      <button class="home-card hc-score" id="hc-score">
+        <div class="hc-icon">🏆</div>
+        <div class="hc-info">
+          <span class="hc-label">Placar</span>
+          <span class="hc-desc">Scoreboard</span>
+        </div>
+        <span class="hc-arrow">→</span>
+      </button>
+      <button class="home-card hc-history" id="hc-history">
+        <div class="hc-icon">📊</div>
+        <div class="hc-info">
+          <span class="hc-label">Histórico</span>
+          <span class="hc-desc">Partidas</span>
+        </div>
+        <span class="hc-arrow">→</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     TELA 3 · LISTAS
+═══════════════════════════════════════════ -->
+<div id="screen-lists" class="screen">
+  <header class="topbar">
+    <button class="icon-btn back-btn" data-back="home">←</button>
+    <span class="topbar-title">Listas de Vôlei</span>
+    <button class="icon-btn" id="btn-new-list" title="Nova lista">＋</button>
+  </header>
+
+  <div class="screen-body">
+
+    <!-- Modal nova lista -->
+    <div class="modal-overlay hidden" id="modal-new-list">
+      <div class="modal-box">
+        <h3 class="modal-title">Nova Lista</h3>
+        <div class="field-wrap">
+          <label>Título</label>
+          <input type="text" id="nl-title" placeholder="ex: Vôlei Quinta 03/04"/>
+        </div>
+        <div class="field-wrap">
+          <label>Local</label>
+          <input type="text" id="nl-local" placeholder="ex: Quadra do Parque"/>
+        </div>
+        <div class="field-wrap">
+          <label>Data</label>
+          <input type="date" id="nl-date"/>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-ghost" id="nl-cancel">Cancelar</button>
+          <button class="btn-main" id="nl-create">Criar Lista</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Listas do usuário -->
+    <div class="section-head">
+      <span>Minhas listas</span>
+      <span class="badge-count" id="my-lists-count">0</span>
+    </div>
+    <div id="my-lists-container" class="lists-container">
+      <div class="empty-state" id="empty-lists">
+        <span class="es-icon">📋</span>
+        <p>Nenhuma lista ainda.<br/>Crie uma para começar!</p>
+      </div>
+    </div>
+
+    <!-- Entrar numa lista com código -->
+    <div class="section-head" style="margin-top:24px">
+      <span>Entrar numa lista</span>
+    </div>
+    <div class="join-row">
+      <input type="text" id="join-code" class="input-field" placeholder="Código da lista (ex: ABC123)" maxlength="6"/>
+      <button class="btn-main" id="btn-join-list">Entrar</button>
+    </div>
+    <div class="auth-error hidden" id="join-error">Código não encontrado</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     TELA 4 · DETALHE DA LISTA
+═══════════════════════════════════════════ -->
+<div id="screen-list-detail" class="screen">
+  <header class="topbar">
+    <button class="icon-btn back-btn" data-back="lists">←</button>
+    <span class="topbar-title" id="list-detail-title">Lista</span>
+    <button class="icon-btn" id="btn-share-list" title="Compartilhar">⎙</button>
+  </header>
+
+  <div class="screen-body">
+    <!-- Info da lista -->
+    <div class="list-info-card">
+      <div class="lic-row">
+        <span class="lic-icon">📍</span>
+        <span id="lic-local">–</span>
+      </div>
+      <div class="lic-row">
+        <span class="lic-icon">📅</span>
+        <span id="lic-date">–</span>
+      </div>
+      <div class="lic-row">
+        <span class="lic-icon">🔑</span>
+        <span>Código: <strong id="lic-code">–</strong></span>
+      </div>
+    </div>
+
+    <!-- Adicionar jogador manualmente -->
+    <div class="add-player-row">
+      <input type="text" class="input-field" id="list-add-name" placeholder="Adicionar jogador manualmente..."/>
+      <button class="btn-main" id="btn-list-add-player">+</button>
+    </div>
+    <!-- Botão entrar na lista (usuário logado) -->
+    <button class="btn-join-self" id="btn-self-join">✋ Entrar na lista com meu nome</button>
+
+    <div class="section-head">
+      <span>Jogadores confirmados</span>
+      <span class="badge-count" id="list-player-count">0</span>
+    </div>
+
+    <div id="list-players-container" class="player-scroll-list"></div>
+
+    <!-- Ações -->
+    <div class="list-actions">
+      <button class="btn-action-copy" id="btn-copy-list">📋 Copiar lista (WhatsApp)</button>
+      <button class="btn-main full-width" id="btn-goto-match">⚡ Ir para o Jogo →</button>
+    </div>
+
+    <div class="toast-bar hidden" id="toast-copied">✅ Lista copiada!</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     TELA 5 · IR AO JOGO (Montar Times)
+═══════════════════════════════════════════ -->
+<div id="screen-match-setup" class="screen">
+  <header class="topbar">
+    <button class="icon-btn back-btn" data-back="list-detail">←</button>
+    <span class="topbar-title">Montar Times</span>
+  </header>
+
+  <div class="screen-body">
+    <div class="setup-hero">
+      <div class="setup-ball">🏐</div>
+      <p id="setup-list-name" class="setup-list-name">Lista: –</p>
+    </div>
+
+    <!-- Jogadores disponíveis -->
+    <div class="section-head">
+      <span>Jogadores na lista</span>
+      <span class="badge-count" id="setup-player-count">0</span>
+    </div>
+    <div id="setup-players-grid" class="players-select-grid"></div>
+
+    <!-- Config times -->
+    <div class="mode-selector-card">
+      <p class="mode-label">Formato dos times</p>
+      <div class="mode-pills" id="mode-pills">
+        <button class="mode-pill" data-mode="2">2×2</button>
+        <button class="mode-pill" data-mode="3">3×3</button>
+        <button class="mode-pill active" data-mode="4">4×4</button>
+        <button class="mode-pill" data-mode="5">5×5</button>
+        <button class="mode-pill" data-mode="6">6×6</button>
+      </div>
+      <p class="mode-info" id="mode-info">Selecione pelo menos 8 jogadores</p>
+    </div>
+
+    <button class="btn-main full-width btn-generate" id="btn-generate-teams">
+      ⚡ Gerar Times Aleatórios
+    </button>
+
+    <!-- Preview dos times gerados -->
+    <div id="teams-preview" class="teams-preview hidden">
+      <div class="team-preview-card tp-a">
+        <div class="tp-header">
+          <span class="tp-label">TIME A</span>
+          <button class="reshuffle-btn" id="btn-reshuffle">🔀 Sortear novamente</button>
+        </div>
+        <div id="tp-team-a" class="tp-players"></div>
+      </div>
+      <div class="vs-badge">VS</div>
+      <div class="team-preview-card tp-b">
+        <div class="tp-header"><span class="tp-label">TIME B</span></div>
+        <div id="tp-team-b" class="tp-players"></div>
+      </div>
+      <div class="team-preview-card tp-queue" id="tp-queue-card">
+        <div class="tp-header"><span class="tp-label">⏳ FILA</span></div>
+        <div id="tp-queue" class="tp-players"></div>
+      </div>
+      <button class="btn-main full-width" id="btn-start-match">🏆 Iniciar Partida →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     TELA 6 · PLACAR (Scoreboard)
+═══════════════════════════════════════════ -->
+<div id="screen-scoreboard" class="screen">
+  <header class="topbar topbar-dark">
+    <button class="icon-btn back-btn" data-back="home">←</button>
+    <span class="topbar-title">Placar</span>
+    <button class="icon-btn" id="btn-end-match" title="Encerrar partida">✕</button>
+  </header>
+
+  <div class="scoreboard-body">
+    <!-- Rotation event banner (hidden by default) -->
+    <div class="rotation-banner hidden" id="rotation-banner">
+      <div class="rb-icon" id="rb-icon">🔄</div>
+      <div class="rb-text" id="rb-text">Rotação!</div>
+    </div>
+
+    <!-- Set info -->
+    <div class="set-info">
+      <span class="set-label">PARTIDA</span>
+      <span class="set-num" id="sb-set-num">1</span>
+      <span class="set-history" id="sb-set-history"></span>
+    </div>
+
+    <!-- Placar principal -->
+    <div class="sb-main">
+      <!-- Time A -->
+      <div class="sb-team sb-team-a">
+        <div class="sb-team-name" id="sb-name-a">TIME A</div>
+        <!-- Streak dots -->
+        <div class="streak-row" id="streak-a">
+          <span class="streak-dot"></span>
+          <span class="streak-dot"></span>
+          <span class="streak-dot"></span>
+        </div>
+        <div class="sb-score-wrap">
+          <button class="sb-minus" id="sb-minus-a">−</button>
+          <div class="sb-score" id="sb-score-a">0</div>
+          <button class="sb-plus" id="sb-plus-a">+</button>
+        </div>
+        <div class="sb-sets-won" id="sb-sets-a">Vitórias: 0</div>
+      </div>
+
+      <!-- Divider -->
+      <div class="sb-divider">
+        <div class="sb-colon">:</div>
+        <div class="sb-timer" id="sb-timer">00:00</div>
+      </div>
+
+      <!-- Time B -->
+      <div class="sb-team sb-team-b">
+        <div class="sb-team-name" id="sb-name-b">TIME B</div>
+        <!-- Streak dots -->
+        <div class="streak-row" id="streak-b">
+          <span class="streak-dot"></span>
+          <span class="streak-dot"></span>
+          <span class="streak-dot"></span>
+        </div>
+        <div class="sb-score-wrap">
+          <button class="sb-minus" id="sb-minus-b">−</button>
+          <div class="sb-score" id="sb-score-b">0</div>
+          <button class="sb-plus" id="sb-plus-b">+</button>
+        </div>
+        <div class="sb-sets-won" id="sb-sets-b">Vitórias: 0</div>
+      </div>
+    </div>
+
+    <!-- Ações -->
+    <div class="sb-actions">
+      <button class="sb-action-btn" id="sb-win-a">🏆 Time A Venceu</button>
+      <button class="sb-action-btn sb-action-b" id="sb-win-b">🏆 Time B Venceu</button>
+    </div>
+
+    <!-- Times em campo -->
+    <div class="sb-teams-on-court">
+      <div class="sb-court-team">
+        <div class="sct-label" style="color:var(--a-color)">
+          <span>Time A em campo</span>
+          <span class="streak-badge hidden" id="badge-streak-a">🔥 0 seguidas</span>
+        </div>
+        <div id="sct-team-a" class="sct-players"></div>
+      </div>
+      <div class="sb-court-team">
+        <div class="sct-label" style="color:var(--b-color)">
+          <span>Time B em campo</span>
+          <span class="streak-badge hidden" id="badge-streak-b">🔥 0 seguidas</span>
+        </div>
+        <div id="sct-team-b" class="sct-players"></div>
+      </div>
+    </div>
+
+    <!-- Fila -->
+    <div class="sb-queue">
+      <div class="sbq-label">⏳ Fila de espera</div>
+      <div id="sbq-players" class="sbq-list"></div>
+    </div>
+
+    <!-- Regra ativa -->
+    <div class="sb-rule-info">
+      <span class="sri-icon">ℹ️</span>
+      <span id="sri-text">Quem perde sai · Quem ganha 3× seguidas também sai</span>
+    </div>
+
+    <!-- Histórico de partidas -->
+    <div class="sb-log">
+      <div class="sb-log-title">Histórico de Partidas</div>
+      <div id="sb-log-list" class="sb-log-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     TELA 7 · HISTÓRICO
+═══════════════════════════════════════════ -->
+<div id="screen-history" class="screen">
+  <header class="topbar">
+    <button class="icon-btn back-btn" data-back="home">←</button>
+    <span class="topbar-title">Histórico de Partidas</span>
+  </header>
+  <div class="screen-body">
+    <div id="history-list" class="history-list"></div>
+    <div class="empty-state hidden" id="empty-history">
+      <span class="es-icon">📊</span>
+      <p>Nenhuma partida encerrada ainda.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PWA Install Banner
+═══════════════════════════════════════════ -->
+<div id="pwa-banner" class="pwa-banner hidden">
+  <span>📱 Instale o Setball!</span>
+  <button class="btn-main btn-sm" id="btn-pwa-install">Instalar</button>
+  <button class="icon-btn" id="btn-pwa-close">✕</button>
+</div>
+
+<!-- Toast global -->
+<div class="global-toast hidden" id="global-toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
