@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════════
-   Setball — style.css v3
+   VoleiApp — style.css v3
    Premium dark sports UI | Legível | Mobile-first
 ══════════════════════════════════════════════════════ */
 
@@ -470,9 +470,33 @@ input, select { font-family: var(--font-b); outline: none; }
 @keyframes shake   { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-8px)} 40%,80%{transform:translateX(8px)} }
 .shake { animation:shake 0.42s ease; }
 
-/* PWA Banner */
-.pwa-banner { position:fixed; bottom:0; left:0; right:0; background:var(--bg2); border-top:1.5px solid var(--bd2); padding:14px 20px calc(var(--sab) + 14px); display:flex; align-items:center; gap:14px; font-size:0.9rem; font-weight:700; z-index:999; animation:slideUp 0.35s ease; box-shadow:0 -8px 32px rgba(0,0,0,0.4); }
-.pwa-banner span { flex:1; }
-
+A
 /* Global Toast */
 .global-toast { position:fixed; bottom:calc(var(--sab) + 80px); left:50%; transform:translateX(-50%); background:var(--surface3); border:1.5px solid var(--bd3); color:var(--t1); font-weight:700; font-size:0.9rem; padding:12px 24px; border-radius:99px; z-index:999; white-space:nowrap; max-width:calc(100vw - 36px); overflow:hidden; text-overflow:ellipsis; box-shadow:0 12px 36px rgba(0,0,0,0.55); animation:fadeUp 0.28s ease; line-height:1.4; }
+
+/* Banner de instalação PWA */
+#install-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--blue);
+  color: #fff;
+  padding: 16px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 200;
+}
+#install-banner.hidden { display: none; }
+#btn-install {
+  background: #fff;
+  color: var(--blue);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+}
+#btn-install:active { transform: scale(0.95); }
